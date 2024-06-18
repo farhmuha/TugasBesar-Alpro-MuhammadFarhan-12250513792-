@@ -1,0 +1,210 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+float saldo = 10000000.0;
+char pinDefault[] = "13792";
+
+void muka(){
+    printf("\n+-------------------------------+\n");
+    printf("|         Selamat_Datang        |\n");
+    printf("|        wastelander_Bank       |\n");
+    printf("+-------------------------------+\n");
+}
+void menu(){
+    printf("|Menu Transaksi:                |\n");
+    printf("|1. Cek Saldo                   |\n");
+    printf("|2. Tarik Tunai                 |\n");
+    printf("|3. Setor Tunai                 |\n");
+    printf("|4. Berbagi                     |\n");
+    printf("|5. Keluar                      |\n");
+    printf("+-------------------------------+\n");
+    printf("Pilih transaksi: ");
+}
+
+void sedekahMenu(){
+    printf("|Menu Berbagi:                  |\n");
+    printf("|1. Wakaf Masjid                |\n");
+    printf("|2. Infaq Anak Yatim            |\n");
+    printf("|3. Sedekah Faqir Miskin        |\n");
+    printf("|4. Keluar                      |\n");
+    printf("+-------------------------------+\n");
+    printf("Pilih transaksi: ");
+}
+
+bool periksaPIN(char *pin) {
+    return strcmp(pin, pinDefault) == 0;
+}
+
+void Saldo() {
+    printf("Saldo Anda saat ini: %.2f\n", saldo);
+}
+
+void tarik() {
+    char pinInput[6];
+    printf("Masukkan PIN Anda untuk melanjutkan: ");
+    scanf("%5s", pinInput);
+    if (!periksaPIN(pinInput)) {
+        printf("PIN salah. Transaksi dibatalkan.\n");
+        return;
+    }
+
+    float jumlah;
+    printf("Masukkan jumlah yang ingin Anda tarik: ");
+    scanf("%f", &jumlah);
+    if (jumlah > saldo) {
+        printf("Saldo tidak mencukupi.\n");
+    } else {
+        saldo -= jumlah;
+        printf("Penarikan berhasil. Saldo Anda sekarang: %.2f\n", saldo);
+    }
+}
+
+void setor() {
+    char pinInput[6];
+    printf("Masukkan PIN Anda untuk melanjutkan: ");
+    scanf("%5s", pinInput);
+    if (!periksaPIN(pinInput)) {
+        printf("PIN salah. Transaksi dibatalkan.\n");
+        return;
+    }
+
+    float jumlah;
+    printf("Masukkan jumlah yang ingin Anda setor: ");
+    scanf("%f", &jumlah);
+    saldo += jumlah;
+    printf("Setor tunai berhasil. Saldo Anda sekarang: %.2f\n", saldo);
+}
+
+void masjid() {
+    char pinInput[6];
+    printf("Masukkan PIN Anda untuk melanjutkan: ");
+    scanf("%5s", pinInput);
+    if (!periksaPIN(pinInput)) {
+        printf("PIN salah. Transaksi dibatalkan.\n");
+        return;
+    }
+
+    float jumlah;
+    printf("Masukkan jumlah yang ingin Anda wakafkan: ");
+    scanf("%f", &jumlah);
+    if (jumlah > saldo) {
+        printf("Saldo tidak mencukupi.\n");
+    } else {
+        saldo -= jumlah;
+        printf("Transaksi berhasil. Terimakasih atas wakafnya\n");
+        printf("Saldo Anda sekarang: %.2f\n", saldo);
+    }
+}
+
+void yatim() {
+    char pinInput[6];
+    printf("Masukkan PIN Anda untuk melanjutkan: ");
+    scanf("%5s", pinInput);
+    if (!periksaPIN(pinInput)) {
+        printf("PIN salah. Transaksi dibatalkan.\n");
+        return;
+    }
+
+    float jumlah;
+    printf("Masukkan jumlah yang ingin Anda infaqkan: ");
+    scanf("%f", &jumlah);
+    if (jumlah > saldo) {
+        printf("Saldo tidak mencukupi.\n");
+    } else {
+        saldo -= jumlah;
+        printf("Transaksi berhasil. Terimakasih atas infaqnya\n");
+        printf("Saldo Anda sekarang: %.2f\n", saldo);
+    }
+}
+
+void faqir() {
+    char pinInput[6];
+    printf("Masukkan PIN Anda untuk melanjutkan: ");
+    scanf("%5s", pinInput);
+    if (!periksaPIN(pinInput)) {
+        printf("PIN salah. Transaksi dibatalkan.\n");
+        return;
+    }
+
+    float jumlah;
+    printf("Masukkan jumlah yang ingin Anda sedekahkan: ");
+    scanf("%f", &jumlah);
+    if (jumlah > saldo) {
+        printf("Saldo tidak mencukupi.\n");
+    } else {
+        saldo -= jumlah;
+        printf("Transaksi berhasil. Terimakasih atas sedekahnya\n");
+        printf("Saldo Anda sekarang: %.2f\n", saldo);
+    }
+}
+
+void sedekah() {
+    int pilihan2;
+    do {
+        muka();
+        sedekahMenu();
+        scanf("%d", &pilihan2);
+
+        switch (pilihan2) {
+            case 1:
+                masjid();
+                break;
+            case 2:
+                yatim();
+                break;
+            case 3:
+                faqir();
+                break;
+            case 4:
+                printf("Terima kasih telah berbagi, donasi anda akan kami teruskan kepada yang membutuhkan. (^-^) \n");
+                break;
+            default:
+                printf("Pilihan tidak valid. Silakan pilih kembali.\n");
+        }
+    } while (pilihan2 != 4);
+}
+
+int main() {
+    char pinInput[6];
+
+    do {
+        printf("Masukkan PIN Anda: ");
+        scanf("%5s", pinInput);
+
+        if (!periksaPIN(pinInput)) {
+            printf("PIN salah. Silakan coba lagi.\n");
+        }
+    } while (!periksaPIN(pinInput));
+
+    printf("Login berhasil.\n");
+
+    int pilihan;
+    do {
+        muka();
+        menu();
+        scanf("%d", &pilihan);
+
+        switch (pilihan) {
+            case 1:
+                Saldo();
+                break;
+            case 2:
+                tarik();
+                break;
+            case 3:
+                setor();
+                break;
+            case 4:
+                sedekah();
+                break;
+            case 5:
+                printf("Terima kasih telah menggunakan layanan kami.\n");
+                break;
+            default:
+                printf("Pilihan tidak valid. Silakan pilih kembali.\n");
+        }
+    } while (pilihan != 5);
+
+    return 0;
+}
